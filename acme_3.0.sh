@@ -21,7 +21,7 @@ while true; do
             echo "✅ 已清空 /tmp/acme，准备重新部署。"
             echo "📦 正在重新执行 acme.sh ..."
             sleep 1
-            bash <(curl -fsSL https://raw.githubusercontent.com/slobys/SSL-Renewal/main/acme.sh)
+            bash <(curl -fsSL https://raw.githubusercontent.com/Koribls/SSL-Renewal/main/acme.sh)
             exit 0
             ;;
         3)
@@ -81,34 +81,34 @@ fi
 # 安装依赖项，配置防火墙
 case $OS in
     ubuntu|debian)
-        sudo apt update -y
-        sudo apt upgrade -y
-        sudo apt install -y curl socat git cron
+         apt update -y
+         apt upgrade -y
+         apt install -y curl socat git cron
         if [ "$FIREWALL_OPTION" -eq 1 ]; then
             if command -v ufw >/dev/null 2>&1; then
-                sudo ufw disable
+                 ufw disable
             else
                 echo "⚠️ UFW 未安装，跳过关闭防火墙。"
             fi
         elif [ "$PORT_OPTION" -eq 1 ]; then
             if command -v ufw >/dev/null 2>&1; then
-                sudo ufw allow $PORT
+                 ufw allow $PORT
             else
                 echo "⚠️ UFW 未安装，跳过端口放行。"
             fi
         fi
         ;;
     centos)
-        sudo yum update -y
-        sudo yum install -y curl socat git cronie
-        sudo systemctl start crond
-        sudo systemctl enable crond
+         yum update -y
+         yum install -y curl socat git cronie
+         systemctl start crond
+         systemctl enable crond
         if [ "$FIREWALL_OPTION" -eq 1 ]; then
-            sudo systemctl stop firewalld
-            sudo systemctl disable firewalld
+             systemctl stop firewalld
+             systemctl disable firewalld
         elif [ "$PORT_OPTION" -eq 1 ]; then
-            sudo firewall-cmd --permanent --add-port=${PORT}/tcp
-            sudo firewall-cmd --reload
+             firewall-cmd --permanent --add-port=${PORT}/tcp
+             firewall-cmd --reload
         fi
         ;;
     *)
