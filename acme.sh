@@ -18,14 +18,14 @@ if ! command -v git >/dev/null 2>&1; then
         sudo apt update -y
         sudo apt install git -y || {
             echo "❌ git 安装失败，请先手动运行以下命令："
-            echo "sudo apt update -y && sudo apt install git -y"
+            echo "apt update -y && apt install git -y"
             exit 1
         }
     elif [[ "$OS_ID" == "centos" ]]; then
         sudo yum update -y
         sudo yum install git -y || {
             echo "❌ git 安装失败，请先手动运行以下命令："
-            echo "sudo yum update -y && sudo yum install git -y"
+            echo "yum update -y && yum install git -y"
             exit 1
         }
     else
@@ -38,7 +38,7 @@ fi
 
 # ========= 清理旧目录并继续 =========
 rm -rf /tmp/acme
-git clone https://github.com/slobys/SSL-Renewal.git /tmp/acme
+git clone https://github.com/Koribls/SSL-Renewal.git /tmp/acme
 mv /tmp/acme/* /root
 chmod +x /root/acme_3.0.sh
 script -q -c "/root/acme_3.0.sh" /dev/null
